@@ -1,0 +1,64 @@
+{% extends 'base.html'%}
+
+{% block title %}
+  Update  page
+  {{block.super}}
+{% endblock %}
+
+
+{% block content %}              
+
+<div class="container py-5"> 
+    <form action="{% url 'updateViewPage' id=note.id %}" method="post" class="container mx-auto card p-4">
+
+       {% include 'components/showMessage.html'%}
+
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="title" >Note Title</label>
+            <input type="text" name="title" value="{{note.title}}" id="title" class="form-control" placeholder="Enter Node Title">
+        </div>
+
+        <div class="mb-3">
+            <label for="desc" >Note Description</label>
+            <textarea rows="5" name="description" id="desc" class="form-control" 
+            placeholder="Enter Node Description"> {{note.description}}
+            </textarea>
+        </div> 
+ 
+        <div class="mb-3">
+            
+            <input type="checkbox" name="published"
+            {% if note.isPublish %}
+            checked
+            {% else %}
+            {% endif %}
+            id="published">  <label for="published">Status</label>
+      
+
+        </div>
+
+        <div class="mb-3">
+
+            <button style="width: 100%" class="btn btn-primary">Add Button <i class="fa-solid fa-arrow-right"></i> </button>
+      
+
+        </div>
+
+    </form>
+
+</div>
+
+
+
+<!-- {{block.super}} -->
+{% endblock %}
+
+
+
+
+
+
+
+
+

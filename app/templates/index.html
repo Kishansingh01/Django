@@ -1,0 +1,90 @@
+{% extends 'base.html'%}
+
+{% block title %}
+  Home page
+  {{block.super}}
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container py-5"> 
+    <form action="{% url 'save-data'%}" method="post" class="container mx-auto card p-4">
+
+       {% include 'components/showMessage.html'%}
+
+ 
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="title" >Note Title</label>
+            <input type="text" name="title"  id="title" class="form-control" placeholder="Enter Node Title">
+        </div>
+
+        <div class="mb-3">
+            <label for="desc" >Note Description</label>
+            <textarea rows="5" name="description" id="desc" class="form-control" 
+            placeholder="Enter Node Description">
+            </textarea>
+        </div> 
+ 
+        <div class="mb-3">
+            <button style="width: 100%" class="btn btn-primary">Add Button <i class="fa-solid fa-arrow-right"></i> </button>
+      
+
+        </div>
+
+    </form>
+
+</div>
+
+<div class="container">
+    <h1>Notes ({{notes | length}})</h1>
+    <div class="row">
+    {% if notes %}
+      {% for note in notes %}
+    
+        <div class="p-2 col-sm-2 col-lg-4 col-md-3">
+            <div class="card">
+                <div class="card-body bg-light">
+                    <h4
+                    {% if note.isPublish %}
+                  
+                    {% else %}
+                      class="text-decoration-line-through"
+                    {% endif %}
+                    >{{note.title}}</h4>
+                    <p>{{note.description}}</p>
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'updateViewPage' id=note.id %}" class="btn btn-sm btn-info">Edit</a>
+                    <!-- <a href= "/delete-note/{{note.id}}" class="btn btn-sm btn-danger">Delete</a> -->
+                        <a href= "{% url 'deleteView' id=note.id %}" class="btn btn-sm btn-danger">Delete</a>
+
+                </div>
+            </div>
+
+        </div>
+        {% endfor %}
+
+    {% else %}
+      <div class="card mx-auto py-4">
+        <h3 class="text-center">No notes found</h3>
+
+      </div>
+    {% endif %}
+
+    </div>
+
+</div>
+
+<!-- {{block.super}} -->
+{% endblock %}
+
+
+
+
+
+
+
+
+
